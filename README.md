@@ -241,67 +241,7 @@ Det holder tempoet oppe og gjør at studentene bruker tiden på riktig ting.
 
 ## 11. Cattle-VM med Vagrant + VirtualBox (Windows-vennlig)
 
-Hvis målet er at studentene skal behandle VM-er som "cattle" (ikke "pets"),
-er Vagrant + VirtualBox et mer stabilt opplegg enn Terraform + alpha-provider for VirtualBox.
+Hvis du vil bruke den valgfrie, mer utforskende Vagrant-løypa for "cattle"-VM-er,
+se [infra/vagrant/README.md](infra/vagrant/README.md).
 
-### Krav på host-maskinen
-
-- VirtualBox
-- Vagrant
-
-### Standard oppstart (Docker i VM)
-
-```bash
-cd infra/vagrant
-vagrant up
-vagrant ssh
-cd /workspace
-docker --version
-docker compose version
-```
-
-### Podman i stedet for Docker
-
-```bash
-cd infra/vagrant
-CONTAINER_RUNTIME=podman vagrant up
-vagrant ssh
-podman --version
-```
-
-### Installer begge runtimes
-
-```bash
-cd infra/vagrant
-CONTAINER_RUNTIME=both vagrant up
-```
-
-### Rebuild fra scratch (cattle-test)
-
-```bash
-cd infra/vagrant
-vagrant destroy -f
-vagrant up
-```
-
-### Valgfri bridged NIC
-
-NAT brukes som standard for kompatibilitet på tvers av Windows/macOS/Linux.
-Hvis du trenger bridged nettverk i tillegg, sett host-adapter før oppstart:
-
-```bash
-cd infra/vagrant
-BRIDGE_ADAPTER="Intel(R) Ethernet Connection" vagrant up
-```
-
-På Linux kan adapter-navn ofte være `eno1`, `eth0` eller lignende.
-
-### Relevante filer
-
-- `infra/vagrant/Vagrantfile`
-- `infra/vagrant/provision.sh`
-
-### Docker/Compose-filer
-
-- `infra/docker/Dockerfile`
-- `infra/docker/docker-compose.yml`
+Den manuelle installasjonen og server-oppsettet lenger opp i denne README-en er fortsatt helt fin som standardløype.
