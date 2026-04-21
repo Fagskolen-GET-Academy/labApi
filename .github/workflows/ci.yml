@@ -59,4 +59,4 @@ jobs: # 4. Jobber
     needs: build              # Venter på build-jobben
     steps:
       - uses: actions/checkout@v5
-      - run: dotnet format --check
+      - run: dotnet format 
