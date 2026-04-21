@@ -1,49 +1,48 @@
-name: CI Pipeline                    # 1. Navn (vises i GitHub UI)
+name: CI Pipeline # 1. Navn (vises i GitHub UI)
 
-on:                                  # 2. Triggere (når skal den kjøre?)
+on: # 2. Triggere (når skal den kjøre?)
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
-env:                                 # 3. Globale miljøvariabler
-  DOTNET_VERSION: '10.0.x'
-  BUILD_CONFIGURATION: 'Release'
-
-jobs:                                # 4. Jobber
-  build:                             #    Jobb-navn (ID)
-    name: Build and Test             #    Visningsnavn
-    runs-on: ubuntu-latest           #    Operativsystem (runner)
-    
-    steps:                           # 5. Steg (sekvensielle)
-      - name: Checkout code          #    Steg-navn
-        uses: actions/checkout@v5    #    Bruk action
-        
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
-          
-      - name: Restore dependencies
-        run: dotnet restore          #    Kjør shell-kommando
-        
-      - name: Build
-        run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
-        
-      - name: Test
-        run: dotnet test --no-build
-
-workflow_dispatch:
+    branches: [main]
+  workflow_dispatch:
     inputs:
       environment:
-        description: 'Deployment environment'
+        description: "Deployment environment"
         required: true
-        default: 'staging'
+        default: "staging"
         type: choice
         options:
           - staging
           - production
       version:
-        description: 'Version tag'
+        description: "Version tag"
         required: true
         type: string
+
+env: # 3. Globale miljøvariabler
+  DOTNET_VERSION: "10.0.x"
+  BUILD_CONFIGURATION: "Release"
+
+jobs: # 4. Jobber
+  build: #    Jobb-navn (ID)
+    name: Build and Test #    Visningsnavn
+    runs-on: ubuntu-latest #    Operativsystem (runner)
+
+    steps: # 5. Steg (sekvensielle)
+      - name: Checkout code #    Steg-navn
+        uses: actions/checkout@v5 #    Bruk action
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: dotnet restore #    Kjør shell-kommando
+
+      - name: Build
+        run: dotnet build --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+      - name: Test
+        run: dotnet test --no-build
